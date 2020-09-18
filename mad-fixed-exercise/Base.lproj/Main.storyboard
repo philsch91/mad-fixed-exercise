@@ -40,9 +40,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VVT-Ca-mod" customClass="PSButton" customModule="mad_fixed_exercise" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VVT-Ca-mod" customClass="PSButton" customModule="mad_fixed_exercise" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="168" width="354" height="34"/>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal" title="Login"/>
                                         <connections>
                                             <action selector="loginButtonTappedWithButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jgW-1H-raL"/>
                                         </connections>

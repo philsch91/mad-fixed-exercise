@@ -30,6 +30,10 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonTapped(button: UIButton) {
+        self.validateLoginInput()
+    }
+
+    func validateLoginInput() {
         guard let email = self.emailTextField.text, self.emailTextField.text != "" else {
             print("invalid email")
             let alertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
@@ -50,16 +54,22 @@ class LoginViewController: UIViewController {
         self.loginActivityIndicatorView.startAnimating()
         self.enableSubviews(false)
         
-        login(completionHandler: {
+        login(email: email, password: password, completionHandler: {
             self.loginActivityIndicatorView.stopAnimating()
             self.enableSubviews(true)
         })
     }
     
-    func login(completionHandler: (() -> Void)?) {
+    func login(email: String, password: String, completionHandler: (() -> Void)?) {
         let alertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
-            self.showLoginAlert(title: "Info", message: "Login successful", actions: [alertAction], completionHandler: completionHandler)
+            var message = "Login unsuccessful"
+
+            if (email == "philipp.schunker@stud.fh-campuswien.ac.at" && password == "1234") {
+                message = "Login successful"
+            }
+
+            self.showLoginAlert(title: "Info", message: message, actions: [alertAction], completionHandler: completionHandler)
         })
     }
     
@@ -90,7 +100,7 @@ extension LoginViewController: UITextFieldDelegate {
         if textField == self.emailTextField {
             self.passwordTextField.becomeFirstResponder()
         } else {
-            login(completionHandler: nil)
+            self.validateLoginInput()
         }
         
         return false

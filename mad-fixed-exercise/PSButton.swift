@@ -35,33 +35,64 @@ class PSButton: UIButton {
     
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
+
+        self.color = UIColor.systemBlue
+        self.pressedColor = UIColor.blue
+        self.configure()
     }
     
     public convenience init() {
         self.init(frame: CGRect.zero)
+
         self.color = UIColor.systemBlue
         self.pressedColor = UIColor.blue
-        
-        self.layer.backgroundColor = self.color?.cgColor
-        self.layer.cornerRadius = 5.0
+        self.configure()
     }
     
     public convenience init(color: UIColor, pressedColor: UIColor) {
         self.init(frame: CGRect.zero)
+
         self.color = color
         self.pressedColor = pressedColor
-        
-        self.layer.backgroundColor = self.color?.cgColor
-        self.layer.cornerRadius = 5.0
+        self.configure()
     }
     
     public convenience init(frame: CGRect, color: UIColor, pressedColor: UIColor) {
         self.init(frame: frame)
+
         self.color = color
         self.pressedColor = pressedColor
-        
+        self.configure()
+    }
+
+    private func configure() {
         self.layer.backgroundColor = self.color?.cgColor
         self.layer.cornerRadius = 5.0
+
+        self.setTitleColor(UIColor.white, for: UIControl.State.normal)
+        //self.setTitleColor(UIColor.white, for: UIControl.State.selected)
+        //self.setTitleColor(UIColor.white, for: UIControl.State.focused)
+        self.setTitleColor(UIColor.white, for: UIControl.State.highlighted)
+
+        if let _pressedColor = self.pressedColor {
+            self.setBackgroundColor(color: _pressedColor, forState: UIControl.State.highlighted)
+        }
+    }
+
+    public func setBackgroundColor(color: UIColor, forState: UIControl.State) {
+        self.clipsToBounds = true
+        UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
+
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return
+        }
+
+        //context.setFillColor(self.pressedColor?.cgColor)
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.setBackgroundImage(image, for: forState)
     }
 
     /*
