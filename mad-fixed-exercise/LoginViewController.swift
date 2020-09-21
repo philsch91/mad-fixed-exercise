@@ -74,7 +74,7 @@ class LoginViewController: UIViewController {
     }
     
     func showLoginAlert(title: String?, message: String?, actions: [UIAlertAction]?, completionHandler: (() -> Void)?) {
-        DispatchQueue.global().sync {
+        DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
             if let _actions = actions {
                 for _action in _actions {
