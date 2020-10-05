@@ -55,12 +55,15 @@ class LoginViewController: UIViewController {
         self.enableSubviews(false)
         
         login(email: email, password: password, completionHandler: {
-            self.loginActivityIndicatorView.stopAnimating()
-            self.enableSubviews(true)
+            DispatchQueue.main.async {
+                self.loginActivityIndicatorView.stopAnimating()
+                self.enableSubviews(true)
+            }
         })
     }
     
     func login(email: String, password: String, completionHandler: (() -> Void)?) {
+        /*
         let alertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
             var message = "Login unsuccessful"
@@ -71,14 +74,17 @@ class LoginViewController: UIViewController {
 
             self.showLoginAlert(title: "Info", message: message, actions: [alertAction], completionHandler: completionHandler)
         })
+        */
+        let firebaseService = FirebaseService()
+        firebaseService.login(email: "m@m.at", password: "madmad", completionHandler: completionHandler)
     }
     
     func showLoginAlert(title: String?, message: String?, actions: [UIAlertAction]?, completionHandler: (() -> Void)?) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
             if let _actions = actions {
-                for _action in _actions {
-                    alertController.addAction(_action)
+                for action in _actions {
+                    alertController.addAction(action)
                 }
             }
             self.present(alertController, animated: true, completion: completionHandler);
