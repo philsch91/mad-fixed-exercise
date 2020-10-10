@@ -9,12 +9,33 @@
 import Foundation
 
 enum NetworkingError: Error {
-    case requestSerialization
-    case invalidEmailAddress
-    case wrongEmailAddress
-    case wrongPassword
-    case networkOffline
-    case responseSerialization
-    case statusCode
-    case unknown
+    case requestSerialization(String)
+    case invalidEmailAddress(String)
+    case wrongEmailAddress(String)
+    case wrongPassword(String)
+    case networkOffline(String)
+    case responseSerialization(String)
+    case statusCode(Int)
+    case unknown(String)
+
+    func get() -> String {
+        switch self {
+        case NetworkingError.requestSerialization(let str):
+            return str
+        case NetworkingError.invalidEmailAddress(let str):
+            return str
+        case NetworkingError.wrongEmailAddress(let str):
+            return str
+        case NetworkingError.wrongPassword(let str):
+            return str
+        case NetworkingError.networkOffline(let str):
+            return str
+        case NetworkingError.responseSerialization(let str):
+            return str
+        case NetworkingError.statusCode(let int):
+            return String(int)
+        case NetworkingError.unknown(let str):
+            return str
+        }
+    }
 }

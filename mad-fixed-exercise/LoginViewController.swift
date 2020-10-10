@@ -48,49 +48,67 @@ class LoginViewController: UIViewController {
             return
         }
         
-        print(email)
-        print(password)
+        print(email)    //m@m.at
+        print(password) //madmad
         
         self.loginActivityIndicatorView.startAnimating()
         self.enableSubviews(false)
-        
-        login(email: email, password: password, completionHandler: {
-            DispatchQueue.main.async {
-                self.loginActivityIndicatorView.stopAnimating()
-                self.enableSubviews(true)
-            }
-        })
-    }
-    
-    func login(email: String, password: String, completionHandler: (() -> Void)?) {
-        /*
-        let alertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
-            var message = "Login unsuccessful"
 
-            if (email == "philipp.schunker@stud.fh-campuswien.ac.at" && password == "1234") {
-                message = "Login successful"
-            }
-
-            self.showLoginAlert(title: "Info", message: message, actions: [alertAction], completionHandler: completionHandler)
-        })
-        */
         let firebaseService = FirebaseService()
-        firebaseService.login(email: "m@m.att", password: "madmad", completionHandler: completionHandler)
+        firebaseService.login(email: email, password: password, completionHandler: { (user, error) -> Void in
+            if let user = user {
+                print(user)
+                self.showLoginAlert(title: "Info", message: "Login successful", actions: nil, completionHandler: {
+                    self.loginActivityIndicatorView.stopAnimating()
+                    self.enableSubviews(true)
+                })
+            }
+
+            if let error = error {
+                let message = self.mapNetworkingErrorToUserMessage(error)
+                self.showLoginAlert(title: "Info", message: message, actions: nil, completionHandler: {
+                    self.loginActivityIndicatorView.stopAnimating()
+                    self.enableSubviews(true)
+                })
+            }
+        })
     }
-    
+
     func showLoginAlert(title: String?, message: String?, actions: [UIAlertAction]?, completionHandler: (() -> Void)?) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+
             if let actions = actions {
                 for action in actions {
                     alertController.addAction(action)
                 }
+            } else {
+                let defaultAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+                alertController.addAction(defaultAlertAction)
             }
             self.present(alertController, animated: true, completion: completionHandler);
         }
     }
     
+    func mapNetworkingErrorToUserMessage(_ error: NetworkingError) -> String {
+        switch error {
+        case NetworkingError.invalidEmailAddress( _):
+            return "Invalid email address"
+        case NetworkingError.wrongEmailAddress( _):
+            return "Wrong email address"
+        case NetworkingError.wrongPassword( _):
+            return "Wrong password"
+        case NetworkingError.statusCode(let statuscode):
+            return "Network status code " + String(statuscode)
+        default:
+            var msg = error.get()
+            if msg == "" {
+                msg = "Unknown error"
+            }
+            return msg
+        }
+    }
+
     func enableSubviews(_ enabled: Bool) {
         for subview in self.view.subviews {
             subview.isUserInteractionEnabled = enabled
