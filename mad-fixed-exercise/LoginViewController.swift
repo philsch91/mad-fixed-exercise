@@ -76,14 +76,14 @@ class LoginViewController: UIViewController {
         })
         */
         let firebaseService = FirebaseService()
-        firebaseService.login(email: "m@m.at", password: "madmad", completionHandler: completionHandler)
+        firebaseService.login(email: "m@m.att", password: "madmad", completionHandler: completionHandler)
     }
     
     func showLoginAlert(title: String?, message: String?, actions: [UIAlertAction]?, completionHandler: (() -> Void)?) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-            if let _actions = actions {
-                for action in _actions {
+            if let actions = actions {
+                for action in actions {
                     alertController.addAction(action)
                 }
             }

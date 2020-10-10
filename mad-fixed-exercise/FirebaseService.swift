@@ -21,6 +21,7 @@ class FirebaseService {
         self.init(URLSessionConfiguration.default)
     }
     
+    //TODO: @escaping
     func login(email: String, password: String, completionHandler: (() -> Void)?) -> Void {
         let url = URL(string: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + self.apiKey)!
         var urlRequest = URLRequest(url: url)
@@ -33,22 +34,36 @@ class FirebaseService {
         dict["returnSecureToken"] = true
         
         let requestBody = try! JSONSerialization.data(withJSONObject: dict, options: [])
+        print(requestBody)
         urlRequest.httpBody = requestBody
         
-        let dataTask = self.urlSession.dataTask(with: urlRequest) { (_data, _urlResponse, _error) in
-            guard let data = _data else {
-                print(_urlResponse!)
-                print(_error!)
+        let dataTask = self.urlSession.dataTask(with: urlRequest) { (data, urlResponse, error) in
+            guard let response = urlResponse as? HTTPURLResponse, error == nil else {
+                print("error", error ?? "unknown error")
                 return
             }
             
-            //let payload = String(data: data, encoding: String.Encoding.utf8)!
-            //print(payload)
+            print(response.statusCode)
+
+            guard let data = data else {
+                print("empty response body")
+                return
+            }
+
+            let payload = String(data: data, encoding: String.Encoding.utf8)!
+            print(payload)
+
+            guard response.statusCode >= 200 && response.statusCode <= 299 else {
+                let responseError = try! JSONDecoder().decode(ResponseError.self, from: data)
+                print(responseError)
+                return
+            }
+
             let user = try! JSONDecoder().decode(User.self, from: data)
             print(user)
             
-            if let _completionHandler = completionHandler {
-                _completionHandler()
+            if let completionHandler = completionHandler {
+                completionHandler()
             }
         }
         

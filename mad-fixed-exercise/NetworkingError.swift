@@ -8,6 +8,13 @@
 
 import Foundation
 
-enum NetworkingError {
-    //
+enum NetworkingError: Error {
+    case requestSerialization
+    case invalidEmailAddress
+    case wrongEmailAddress
+    case wrongPassword
+    case networkOffline
+    case responseSerialization
+    case statusCode
+    case unknown
 }
