@@ -21,7 +21,6 @@ class FirebaseService {
         self.init(URLSessionConfiguration.default)
     }
     
-    //TODO: @escaping
     func login(email: String, password: String, completionHandler: @escaping (User?, NetworkingError?) -> Void) -> Void {
         let url = URL(string: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + self.apiKey)!
         var urlRequest = URLRequest(url: url)
@@ -113,6 +112,48 @@ class FirebaseService {
             completionHandler(user, nil)
         }
         
+        dataTask.resume()
+    }
+
+    func getCountries(user: User, completionHandler: @escaping (String?, NetworkingError?) -> Void) -> Void {
+        let url = URL(string: "https://firestore.googleapis.com/v1/projects/mad-course-3ceb1/databases/(default)/documents/countries?pageSize=1000&orderBy=name")!
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(user.idToken)", forHTTPHeaderField: "Authorization")
+
+        let dataTask = self.urlSession.dataTask(with: urlRequest) { (data, urlResponse, error) in
+            guard let response = urlResponse as? HTTPURLResponse, error == nil else {
+                print("error", error ?? "unknown error")
+                var networkingError = NetworkingError.unknown("")
+
+                if let error = error {
+                    networkingError = self.mapErrorToNetworkingError(error)
+                }
+
+                completionHandler(nil, networkingError)
+                return
+            }
+
+            print("status code: " + String(response.statusCode))
+
+            guard let data = data else {
+                print("empty response body")
+                var networkingError = NetworkingError.unknown("")
+
+                if response.statusCode != 200 {
+                    networkingError = NetworkingError.statusCode(response.statusCode)
+                }
+
+                completionHandler(nil, networkingError)
+                return
+            }
+
+            let payload = String(data: data, encoding: String.Encoding.utf8)!
+            print(payload)
+
+            completionHandler(payload, nil)
+        }
+
         dataTask.resume()
     }
 

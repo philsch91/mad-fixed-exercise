@@ -14,9 +14,11 @@ class LoginViewController: UIViewController {
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var loginActivityIndicatorView: UIActivityIndicatorView!
+    var user: User?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     override func viewDidLoad() {
@@ -55,21 +57,30 @@ class LoginViewController: UIViewController {
         self.enableSubviews(false)
 
         let firebaseService = FirebaseService()
-        firebaseService.login(email: email, password: password, completionHandler: { (user, error) -> Void in
-            if let user = user {
-                print(user)
-                self.showLoginAlert(title: "Info", message: "Login successful", actions: nil, completionHandler: {
-                    self.loginActivityIndicatorView.stopAnimating()
-                    self.enableSubviews(true)
-                })
-            }
 
+        firebaseService.login(email: email, password: password, completionHandler: { (user, error) -> Void in
             if let error = error {
                 let message = self.mapNetworkingErrorToUserMessage(error)
                 self.showLoginAlert(title: "Info", message: message, actions: nil, completionHandler: {
                     self.loginActivityIndicatorView.stopAnimating()
                     self.enableSubviews(true)
                 })
+            }
+
+            if let user = user {
+                print(user)
+                self.user = user
+                /*
+                self.showLoginAlert(title: "Info", message: "Login successful", actions: nil, completionHandler: {
+                    self.loginActivityIndicatorView.stopAnimating()
+                    self.enableSubviews(true)
+                }) */
+
+                DispatchQueue.main.async {
+                    self.loginActivityIndicatorView.stopAnimating()
+                    self.enableSubviews(true)
+                    self.performSegue(withIdentifier: "loginSegue", sender: nil)
+                }
             }
         })
     }
@@ -90,6 +101,12 @@ class LoginViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let segueId = segue.identifier, segueId == "loginSegue", let countriesViewController = segue.destination as? CountriesViewController, let user = self.user {
+            countriesViewController.user = user
+        }
+    }
+
     func mapNetworkingErrorToUserMessage(_ error: NetworkingError) -> String {
         switch error {
         case NetworkingError.invalidEmailAddress( _):

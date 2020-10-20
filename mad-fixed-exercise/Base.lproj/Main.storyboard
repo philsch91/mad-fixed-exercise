@@ -68,11 +68,28 @@
                         <outlet property="loginActivityIndicatorView" destination="5dZ-i7-D7Q" id="yKn-m0-cKA"/>
                         <outlet property="loginButton" destination="VVT-Ca-mod" id="KeP-Ek-skL"/>
                         <outlet property="passwordTextField" destination="j88-Db-VK9" id="M1F-Dm-QGQ"/>
+                        <segue destination="5dr-9P-T0L" kind="show" identifier="loginSegue" id="f3o-m7-eD1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="102.45535714285714"/>
+        </scene>
+        <!--Countries View Controller-->
+        <scene sceneID="15l-E1-9jp">
+            <objects>
+                <viewController id="5dr-9P-T0L" customClass="CountriesViewController" customModule="mad_fixed_exercise" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hAF-yr-jIp">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="mk5-23-Jyd"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="6Be-0j-aeq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T70-Qt-Ohz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1941" y="102"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dt5-dF-8V6">
