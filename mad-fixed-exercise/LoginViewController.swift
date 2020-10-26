@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var loginActivityIndicatorView: UIActivityIndicatorView!
-    var user: User?
+    var firebaseService: FirebaseService?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -57,6 +57,7 @@ class LoginViewController: UIViewController {
         self.enableSubviews(false)
 
         let firebaseService = FirebaseService()
+        //self.firebaseService = firebaseService
 
         firebaseService.login(email: email, password: password, completionHandler: { (user, error) -> Void in
             if let error = error {
@@ -69,7 +70,8 @@ class LoginViewController: UIViewController {
 
             if let user = user {
                 print(user)
-                self.user = user
+                firebaseService.user = user
+                self.firebaseService = firebaseService
                 /*
                 self.showLoginAlert(title: "Info", message: "Login successful", actions: nil, completionHandler: {
                     self.loginActivityIndicatorView.stopAnimating()
@@ -102,8 +104,8 @@ class LoginViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let segueId = segue.identifier, segueId == "loginSegue", let countriesViewController = segue.destination as? CountriesViewController, let user = self.user {
-            countriesViewController.user = user
+        if let segueId = segue.identifier, segueId == "loginSegue", let countriesViewController = segue.destination as? CountriesViewController, let firebaseService = self.firebaseService {
+            countriesViewController.firebaseService = firebaseService
         }
     }
 

@@ -10,23 +10,22 @@ import UIKit
 
 class CountriesViewController: UIViewController {
 
-    var user: User?
+    public var firebaseService: FirebaseService?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.title = "Countries"
 
-        if let user = self.user {
-            let firebaseService = FirebaseService()
-
-            firebaseService.getCountries(user: user) { (string, error) in
+        if let firebaseService = self.firebaseService {
+            print("firebaseService.isAuthenticated: \(firebaseService.isAuthenticated)")
+            firebaseService.getCountries { (countries, error) in
                 if let error = error {
                     print(error)
                 }
 
-                if let string = string {
-                    print(string)
+                if let countries = countries {
+                    print(countries)
                 }
             }
         }

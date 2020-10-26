@@ -12,6 +12,15 @@ class FirebaseService {
     
     private let urlSession: URLSession
     private let apiKey = "AIzaSyCTryhlVmmRHYE7iQT3k0eeNRHIKsTMpRw"
+    public var user: User?
+    public var isAuthenticated: Bool {
+        get {
+            if self.user == nil {
+                return false
+            }
+            return true
+        }
+    }
     
     init(_ urlSessionConfiguration: URLSessionConfiguration) {
         self.urlSession = URLSession(configuration: urlSessionConfiguration)
@@ -21,7 +30,7 @@ class FirebaseService {
         self.init(URLSessionConfiguration.default)
     }
     
-    func login(email: String, password: String, completionHandler: @escaping (User?, NetworkingError?) -> Void) -> Void {
+    public func login(email: String, password: String, completionHandler: @escaping (User?, NetworkingError?) -> Void) -> Void {
         let url = URL(string: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + self.apiKey)!
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
@@ -115,7 +124,10 @@ class FirebaseService {
         dataTask.resume()
     }
 
-    func getCountries(user: User, completionHandler: @escaping (String?, NetworkingError?) -> Void) -> Void {
+    public func getCountries(completionHandler: @escaping ([Country]?, NetworkingError?) -> Void) -> Void {
+        guard let user = self.user else {
+            return
+        }
         let url = URL(string: "https://firestore.googleapis.com/v1/projects/mad-course-3ceb1/databases/(default)/documents/countries?pageSize=1000&orderBy=name")!
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "GET"
@@ -148,10 +160,29 @@ class FirebaseService {
                 return
             }
 
-            let payload = String(data: data, encoding: String.Encoding.utf8)!
-            print(payload)
+            //let payload = String(data: data, encoding: String.Encoding.utf8)!
+            //print(payload)
 
-            completionHandler(payload, nil)
+            guard response.statusCode == 200 else {
+                // TODO
+                return
+            }
+
+            let documentsContainer: DocumentsContainer
+
+            do {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = JSONDecoder.DateDecodingStrategy.formatted(DateFormatter.iso8601Full)
+                documentsContainer = try decoder.decode(DocumentsContainer.self, from: data)
+            } catch {
+                print(error)
+                completionHandler(nil, NetworkingError.responseSerialization(error.localizedDescription))
+                return
+            }
+
+            //print(documentsContainer.documents)
+
+            completionHandler(documentsContainer.documents, nil)
         }
 
         dataTask.resume()
