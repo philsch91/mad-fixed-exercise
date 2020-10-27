@@ -8,24 +8,38 @@
 
 import UIKit
 
-class CountriesViewController: UIViewController {
+class CountriesViewController: BaseViewController {
 
+    @IBOutlet var mainTableView: UITableView!
     public var firebaseService: FirebaseService?
+    public var countries: [Country]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.title = "Countries"
 
+        self.mainTableView.delegate = self
+        self.mainTableView.dataSource = self
+
         if let firebaseService = self.firebaseService {
             print("firebaseService.isAuthenticated: \(firebaseService.isAuthenticated)")
             firebaseService.getCountries { (countries, error) in
                 if let error = error {
                     print(error)
+                    let message = self.mapNetworkingErrorToUserMessage(error)
+                    self.showAlert(title: "Info", message: message, actions: nil, completionHandler: nil)
+                    return
                 }
 
-                if let countries = countries {
-                    print(countries)
+                guard let countries = countries else {
+                    return
+                }
+
+                print(countries)
+                self.countries = countries
+                DispatchQueue.main.async {
+                    self.mainTableView.reloadData()
                 }
             }
         }
@@ -46,4 +60,27 @@ class CountriesViewController: UIViewController {
     }
     */
 
+}
+
+extension CountriesViewController: UITableViewDelegate {
+    //TODO
+}
+
+extension CountriesViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let countries = self.countries {
+            return countries.count
+        }
+
+        return 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        guard let countries = self.countries else {
+            return cell
+        }
+        cell.textLabel?.text = countries[indexPath.row].name
+        return cell
+    }
 }

@@ -98,10 +98,25 @@
                     <view key="view" contentMode="scaleToFill" id="hAF-yr-jIp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7mL-R6-vSi">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="7mL-R6-vSi" firstAttribute="leading" secondItem="mk5-23-Jyd" secondAttribute="leading" id="8Br-Gb-kfz"/>
+                            <constraint firstItem="7mL-R6-vSi" firstAttribute="top" secondItem="mk5-23-Jyd" secondAttribute="top" id="RmU-Hl-Kfn"/>
+                            <constraint firstItem="mk5-23-Jyd" firstAttribute="trailing" secondItem="7mL-R6-vSi" secondAttribute="trailing" id="Yxd-Fb-yz3"/>
+                            <constraint firstItem="mk5-23-Jyd" firstAttribute="bottom" secondItem="7mL-R6-vSi" secondAttribute="bottom" id="b0m-Ff-7wq"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="mk5-23-Jyd"/>
                     </view>
                     <navigationItem key="navigationItem" id="6Be-0j-aeq"/>
+                    <connections>
+                        <outlet property="mainTableView" destination="7mL-R6-vSi" id="T7p-Q7-RwW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T70-Qt-Ohz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

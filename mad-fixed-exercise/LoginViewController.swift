@@ -15,11 +15,6 @@ class LoginViewController: UIViewController {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var loginActivityIndicatorView: UIActivityIndicatorView!
     var firebaseService: FirebaseService?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +24,11 @@ class LoginViewController: UIViewController {
         
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     @IBAction func loginButtonTapped(button: UIButton) {
@@ -102,12 +102,6 @@ class LoginViewController: UIViewController {
             self.present(alertController, animated: true, completion: completionHandler);
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let segueId = segue.identifier, segueId == "loginSegue", let countriesViewController = segue.destination as? CountriesViewController, let firebaseService = self.firebaseService {
-            countriesViewController.firebaseService = firebaseService
-        }
-    }
 
     func mapNetworkingErrorToUserMessage(_ error: NetworkingError) -> String {
         switch error {
@@ -131,6 +125,14 @@ class LoginViewController: UIViewController {
     func enableSubviews(_ enabled: Bool) {
         for subview in self.view.subviews {
             subview.isUserInteractionEnabled = enabled
+        }
+    }
+
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let segueId = segue.identifier, segueId == "loginSegue", let countriesViewController = segue.destination as? CountriesViewController, let firebaseService = self.firebaseService {
+            countriesViewController.firebaseService = firebaseService
         }
     }
 }

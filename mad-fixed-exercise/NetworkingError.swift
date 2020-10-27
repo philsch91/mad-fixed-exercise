@@ -15,6 +15,7 @@ enum NetworkingError: Error {
     case wrongPassword(String)
     case networkOffline(String)
     case responseSerialization(String)
+    case forbidden(String)
     case statusCode(Int)
     case unknown(String)
 
@@ -31,6 +32,8 @@ enum NetworkingError: Error {
         case NetworkingError.networkOffline(let str):
             return str
         case NetworkingError.responseSerialization(let str):
+            return str
+        case NetworkingError.forbidden(let str):
             return str
         case NetworkingError.statusCode(let int):
             return String(int)

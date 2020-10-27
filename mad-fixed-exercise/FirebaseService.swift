@@ -92,6 +92,7 @@ class FirebaseService {
                     print(error)
                     var networkingError = NetworkingError.statusCode(response.statusCode)
 
+                    // override NetworkingError for known and tested status codes
                     if (response.statusCode == 400) {
                         networkingError = NetworkingError.responseSerialization(error.localizedDescription)
                     }
@@ -116,7 +117,7 @@ class FirebaseService {
                 return
             }
 
-            print(user)
+            //print(user)
 
             completionHandler(user, nil)
         }
@@ -160,11 +161,33 @@ class FirebaseService {
                 return
             }
 
-            //let payload = String(data: data, encoding: String.Encoding.utf8)!
+            let payload = String(data: data, encoding: String.Encoding.utf8)!
             //print(payload)
 
+            // use guard to ensure early return
+            // Kent Beck - Smalltalk Best Practice Patterns: guard clauses
             guard response.statusCode == 200 else {
-                // TODO
+                print(payload)
+                let firebaseResponseError: FirebaseReponseError
+
+                do {
+                    firebaseResponseError = try JSONDecoder().decode(FirebaseReponseError.self, from: data)
+                } catch {
+                    print(error)
+                    var networkingError = NetworkingError.statusCode(response.statusCode)
+
+                    // override NetworkingError for known and tested status codes
+                    if (response.statusCode == 403) {
+                        networkingError = NetworkingError.responseSerialization(error.localizedDescription)
+                    }
+
+                    completionHandler(nil, networkingError)
+                    return
+                }
+
+                print(firebaseResponseError)
+                let error = self.mapFirebaseResponseErrorToNetworkingError(firebaseResponseError)
+                completionHandler(nil, error)
                 return
             }
 
@@ -212,6 +235,15 @@ class FirebaseService {
             return NetworkingError.wrongPassword(error.message)
         case "TOO_MANY_ATTEMPTS_TRY_LATER":
             return NetworkingError.wrongPassword(error.message)
+        default:
+            return NetworkingError.unknown("")
+        }
+    }
+
+    private func mapFirebaseResponseErrorToNetworkingError(_ error: FirebaseReponseError) -> NetworkingError {
+        switch error.status {
+        case "PERMISSION_DENIED":
+            return NetworkingError.forbidden(error.message)
         default:
             return NetworkingError.unknown("")
         }
