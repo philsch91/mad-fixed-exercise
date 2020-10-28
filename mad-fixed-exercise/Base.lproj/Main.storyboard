@@ -83,6 +83,7 @@
                         <outlet property="emailTextField" destination="6ws-sv-naW" id="lGd-1m-eS9"/>
                         <outlet property="loginActivityIndicatorView" destination="5dZ-i7-D7Q" id="yKn-m0-cKA"/>
                         <outlet property="loginButton" destination="VVT-Ca-mod" id="KeP-Ek-skL"/>
+                        <outlet property="mainScrollView" destination="ZYS-yn-cDm" id="bm9-vA-ItF"/>
                         <outlet property="passwordTextField" destination="j88-Db-VK9" id="M1F-Dm-QGQ"/>
                         <segue destination="5dr-9P-T0L" kind="show" identifier="loginSegue" id="f3o-m7-eD1"/>
                     </connections>

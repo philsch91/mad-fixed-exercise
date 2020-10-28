@@ -24,6 +24,7 @@
 		17B9688A2513B7CE00A76E44 /* mad_fixed_exerciseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B968892513B7CE00A76E44 /* mad_fixed_exerciseTests.swift */; };
 		17B968962513C4FA00A76E44 /* PSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B968952513C4FA00A76E44 /* PSButton.swift */; };
 		17C422DF253EE42D00EA84E0 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C422DE253EE42D00EA84E0 /* CountriesViewController.swift */; };
+		17FFB07C2549A9F200EA2D16 /* KeyboardAdjustment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FFB07B2549A9F200EA2D16 /* KeyboardAdjustment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		17B9688B2513B7CE00A76E44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17B968952513C4FA00A76E44 /* PSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSButton.swift; sourceTree = "<group>"; };
 		17C422DE253EE42D00EA84E0 /* CountriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
+		17FFB07B2549A9F200EA2D16 /* KeyboardAdjustment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAdjustment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				17B968952513C4FA00A76E44 /* PSButton.swift */,
+				17FFB07B2549A9F200EA2D16 /* KeyboardAdjustment.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				17B968962513C4FA00A76E44 /* PSButton.swift in Sources */,
 				1755FD61252BA5B800617A98 /* FirebaseService.swift in Sources */,
 				1755FD64252BA9E500617A98 /* User.swift in Sources */,
+				17FFB07C2549A9F200EA2D16 /* KeyboardAdjustment.swift in Sources */,
 				1755FD66252BB44800617A98 /* NetworkingError.swift in Sources */,
 				17B968772513B7CB00A76E44 /* LoginViewController.swift in Sources */,
 				170A11E3254745A4009048D6 /* DateFormatter.swift in Sources */,

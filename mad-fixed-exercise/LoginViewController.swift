@@ -14,7 +14,9 @@ class LoginViewController: UIViewController {
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var loginActivityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet var mainScrollView: UIScrollView!
     var firebaseService: FirebaseService?
+    var keyboardAdjustment: KeyboardAdjustment?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +26,9 @@ class LoginViewController: UIViewController {
         
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
+
+        self.keyboardAdjustment = KeyboardAdjustment(scrollView: self.mainScrollView)
+        self.mainScrollView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.interactive
     }
 
     override func viewWillAppear(_ animated: Bool) {
