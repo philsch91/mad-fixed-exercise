@@ -10,6 +10,13 @@ import UIKit
 
 class CountryDetailViewController: UIViewController {
 
+    @IBOutlet var mainScrollView: UIScrollView!
+    @IBOutlet var contentView: UIStackView!
+    @IBOutlet var nativeLabel: UILabel!
+    @IBOutlet var capitalLabel: UILabel!
+    @IBOutlet var continentLabel: UILabel!
+    @IBOutlet var languagesTableView: UITableView!
+
     public var country: Country?
 
     override func viewDidLoad() {
@@ -18,6 +25,9 @@ class CountryDetailViewController: UIViewController {
 
         if let country = self.country {
             self.title = country.name
+            self.nativeLabel.text = country.native
+            self.capitalLabel.text = country.capital
+            self.continentLabel.text = country.continent
         }
     }
     
