@@ -12,6 +12,7 @@
 		171DB1F6254879B500AA6D4D /* FirebaseResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171DB1F5254879B500AA6D4D /* FirebaseResponseError.swift */; };
 		171DB1F8254887A300AA6D4D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171DB1F7254887A300AA6D4D /* BaseViewController.swift */; };
 		171E9BF0252E29D000759DA5 /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171E9BEF252E29D000759DA5 /* ResponseError.swift */; };
+		1733CEAD255725E500829654 /* IntrinsicTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1733CEAC255725E500829654 /* IntrinsicTableView.swift */; };
 		1755FD61252BA5B800617A98 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1755FD60252BA5B800617A98 /* FirebaseService.swift */; };
 		1755FD64252BA9E500617A98 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1755FD63252BA9E500617A98 /* User.swift */; };
 		1755FD66252BB44800617A98 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1755FD65252BB44800617A98 /* NetworkingError.swift */; };
@@ -45,6 +46,7 @@
 		171DB1F5254879B500AA6D4D /* FirebaseResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseResponseError.swift; sourceTree = "<group>"; };
 		171DB1F7254887A300AA6D4D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		171E9BEF252E29D000759DA5 /* ResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
+		1733CEAC255725E500829654 /* IntrinsicTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicTableView.swift; sourceTree = "<group>"; };
 		1755FD60252BA5B800617A98 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		1755FD63252BA9E500617A98 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1755FD65252BB44800617A98 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				17B968952513C4FA00A76E44 /* PSButton.swift */,
 				17FFB07B2549A9F200EA2D16 /* KeyboardAdjustment.swift */,
 				17FFB07D2549BE2C00EA2D16 /* ActivityIndicatorTableHeaderView.swift */,
+				1733CEAC255725E500829654 /* IntrinsicTableView.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				1755FD64252BA9E500617A98 /* User.swift in Sources */,
 				17FFB0802549D07300EA2D16 /* CountryDetailViewController.swift in Sources */,
 				17FFB07C2549A9F200EA2D16 /* KeyboardAdjustment.swift in Sources */,
+				1733CEAD255725E500829654 /* IntrinsicTableView.swift in Sources */,
 				1755FD66252BB44800617A98 /* NetworkingError.swift in Sources */,
 				17B968772513B7CB00A76E44 /* LoginViewController.swift in Sources */,
 				170A11E3254745A4009048D6 /* DateFormatter.swift in Sources */,

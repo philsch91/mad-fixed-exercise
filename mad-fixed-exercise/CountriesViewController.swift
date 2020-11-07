@@ -130,11 +130,11 @@ extension CountriesViewController: UITableViewDelegate {
 
 extension CountriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let countries = self.countries {
-            return countries.count
+        guard let countries = self.countries else {
+            return 0
         }
 
-        return 0
+        return countries.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
