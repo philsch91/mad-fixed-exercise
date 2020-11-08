@@ -67,6 +67,11 @@ class CountryDetailViewController: UIViewController {
         //self.languagesTableView.reloadData()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.languagesTableView.flashScrollIndicators()
+    }
+
     func setupUI() {
         // native
         self.nativeTitleLabel.text = "Native"
